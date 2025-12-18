@@ -1,17 +1,22 @@
 {
   "editor.formatOnSave": true,
 
+  "files.eol": "\n",
+
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
 
   "[typescript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
+
   "[typescriptreact]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
+
   "[javascript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
+  
   "[javascriptreact]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
