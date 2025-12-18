@@ -1,67 +1,114 @@
-import Image from 'next/image';
-import styles from './page.module.css';
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+import styles from '../styles/page.module.scss';
+import CityCard from '@/components/weather/CityCard';
+import CityDetails from '@/components/weather/CityDetails';
+import { Box, Text } from '@chakra-ui/react';
+
+const STORAGE_KEY = 'weather_cities';
+
+function loadCitiesFromStorage(): string[] {
+  if (typeof window === 'undefined') return [];
+
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (!saved) return [];
+
+    const parsed = JSON.parse(saved) as string[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
+  const [cities, setCities] = useState<string[]>(loadCitiesFromStorage);
+  const [newCity, setNewCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const isInitialMount = useRef(true);
 
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{' '}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{' '}
-            or the{' '}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{' '}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cities));
+  }, [cities]);
+
+  const handleAddCity = () => {
+    const trimmed = newCity.trim();
+    if (!trimmed) return;
+
+    if (cities.includes(trimmed)) {
+      setNewCity('');
+      return;
+    }
+
+    setCities((prev) => [...prev, trimmed]);
+    setNewCity('');
+  };
+
+  const handleRemoveCity = (city: string) => {
+    setCities((prev) => prev.filter((c) => c !== city));
+
+    if (selectedCity === city) {
+      setSelectedCity(null);
+    }
+  };
+
+  const handleOpenDetails = (city: string) => {
+    setSelectedCity(city);
+  };
+
+  const handleBackToList = () => {
+    setSelectedCity(null);
+  };
+
+  return (
+    <Box className={styles.page}>
+      <Box as="header" className={styles.header}>
+        <h1 className={styles.title}>Weather App</h1>
+      </Box>
+
+      {selectedCity ? (
+        <CityDetails city={selectedCity} onBack={handleBackToList} />
+      ) : cities.length === 0 ? (
+        <Text className={styles.empty}>No cities added yet. Add your first city above.</Text>
+      ) : (
+        <>
+          <div className={styles.form}>
+            <input
+              className={styles.input}
+              placeholder="Enter city name, example: Kyiv"
+              value={newCity}
+              onChange={(e) => setNewCity(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAddCity();
+                }
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <button className={styles.buttonPrimary} type="button" onClick={handleAddCity}>
+              Add city
+            </button>
+          </div>
+          <div className={styles.grid}>
+            {cities.map((city) => (
+              <CityCard
+                key={city}
+                city={city}
+                onRemove={handleRemoveCity}
+                onOpenDetails={handleOpenDetails}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </Box>
   );
 }
