@@ -74,40 +74,41 @@ export default function Home() {
         <h1 className={styles.title}>Weather App</h1>
       </Box>
 
+      {(cities.length === 0 || cities.length > 0) && (
+        <div className={styles.form}>
+          <input
+            className={styles.input}
+            placeholder="Enter city name, example: Kyiv"
+            value={newCity}
+            onChange={(e) => setNewCity(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleAddCity();
+              }
+            }}
+          />
+          <button className={styles.buttonPrimary} type="button" onClick={handleAddCity}>
+            Add city
+          </button>
+        </div>
+      )}
+
       {selectedCity ? (
         <CityDetails city={selectedCity} onBack={handleBackToList} />
       ) : cities.length === 0 ? (
         <Text className={styles.empty}>No cities added yet. Add your first city above.</Text>
       ) : (
-        <>
-          <div className={styles.form}>
-            <input
-              className={styles.input}
-              placeholder="Enter city name, example: Kyiv"
-              value={newCity}
-              onChange={(e) => setNewCity(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handleAddCity();
-                }
-              }}
+        <div className={styles.grid}>
+          {cities.map((city) => (
+            <CityCard
+              key={city}
+              city={city}
+              onRemove={handleRemoveCity}
+              onOpenDetails={handleOpenDetails}
             />
-            <button className={styles.buttonPrimary} type="button" onClick={handleAddCity}>
-              Add city
-            </button>
-          </div>
-          <div className={styles.grid}>
-            {cities.map((city) => (
-              <CityCard
-                key={city}
-                city={city}
-                onRemove={handleRemoveCity}
-                onOpenDetails={handleOpenDetails}
-              />
-            ))}
-          </div>
-        </>
+          ))}
+        </div>
       )}
     </Box>
   );

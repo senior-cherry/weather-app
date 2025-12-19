@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
-$font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family:
+  'Manrope',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  sans-serif;
 
 $color-primary: #667eea;
 $color-primary-dark: #764ba2;
@@ -53,11 +58,11 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   &:hover:not(:disabled) {
     transform: translateY($translate);
   }
-  
+
   &:active:not(:disabled) {
     transform: translateY(0);
   }
-  
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -84,13 +89,13 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: $spacing-2xl;
-  background-image: radial-gradient( 
+  background-image: radial-gradient(
     circle 993px at 0.5% 50.5%,
     rgba(137, 171, 245, 0.37) 0%,
     rgba(245, 247, 252, 1) 100.2%
   );
   color: $color-text-primary;
-  
+
   @media (max-width: $breakpoint-md) {
     padding: $spacing-xl $spacing-lg;
     gap: $spacing-xl;
@@ -111,11 +116,11 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   @include gradient-text;
   letter-spacing: -0.02em;
   margin: 0;
-  
+
   @media (max-width: $breakpoint-md) {
     font-size: 2rem;
   }
-  
+
   @media (max-width: $breakpoint-sm) {
     font-size: 1.75rem;
   }
@@ -147,11 +152,11 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.95rem;
   font-weight: 500;
   transition: all $transition-fast;
-  
+
   &::placeholder {
     color: $color-text-muted;
   }
-  
+
   &:focus {
     outline: none;
     border-color: rgba($color-primary, 0.5);
@@ -174,9 +179,9 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   gap: $spacing-sm;
   transition: all $transition-fast;
   box-shadow: 0 4px 14px 0 rgba($color-primary, 0.3);
-  
+
   @include button-hover(-2px);
-  
+
   &:hover:not(:disabled) {
     box-shadow: 0 6px 20px 0 rgba($color-primary, 0.4);
   }
@@ -185,12 +190,12 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 .grid {
   @include responsive-grid($card-min-width);
   @include container-width;
-  
+
   @media (min-width: $breakpoint-xs) and (max-width: 639px) {
     grid-template-columns: repeat(2, 1fr);
     gap: $spacing-lg;
   }
-  
+
   @media (max-width: 399px) {
     grid-template-columns: 1fr;
     gap: $spacing-lg;
@@ -215,7 +220,7 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: $card-padding;
   @include glass-effect;
   border: 1px solid $glass-border;
-  box-shadow: 
+  box-shadow:
     0 8px 32px 0 rgba($color-primary, 0.15),
     0 2px 8px 0 rgba(0, 0, 0, 0.05),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
@@ -232,24 +237,19 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba($color-primary, 0.5),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba($color-primary, 0.5), transparent);
   }
 
   &:hover {
     transform: translateY(-6px);
     @include glass-effect($glass-bg-hover);
-    box-shadow: 
+    box-shadow:
       0 16px 48px 0 rgba($color-primary, 0.25),
       0 4px 12px 0 rgba(0, 0, 0, 0.08),
       inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
     border-color: rgba($color-primary, 0.4);
   }
-  
+
   @media (max-width: $breakpoint-sm) {
     padding: 1.25rem;
   }
@@ -294,7 +294,7 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   @include gradient-text;
   line-height: 1;
   letter-spacing: -0.03em;
-  
+
   @media (max-width: $breakpoint-sm) {
     font-size: 2.5rem;
   }
@@ -324,7 +324,7 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.875rem;
   color: $color-text-muted;
   font-weight: 500;
-  
+
   span {
     display: flex;
     align-items: center;
@@ -355,13 +355,13 @@ $transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: $font-family;
 
   @include button-hover(-2px);
-  
+
   &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba($color-primary, 0.4);
     box-shadow: 0 4px 12px rgba($color-primary, 0.15);
   }
-  
+
   &:disabled {
     opacity: 0.5;
   }

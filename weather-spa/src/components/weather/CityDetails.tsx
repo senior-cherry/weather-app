@@ -1,6 +1,10 @@
-import { useGetCurrentWeatherByCityQuery } from '@/services/weatherApi';
+import {
+  useGetCurrentWeatherByCityQuery,
+  useGetHourlyForecastByCityQuery,
+} from '@/services/weatherApi';
 import styles from '@/styles/page.module.scss';
 import { Spinner, Text, Box } from '@chakra-ui/react';
+import TemperatureChart from './TemperatureChart';
 
 interface CityDetailsProps {
   city: string;
@@ -9,6 +13,14 @@ interface CityDetailsProps {
 
 export default function CityDetails({ city, onBack }: CityDetailsProps) {
   const { data, error, isLoading, isFetching, refetch } = useGetCurrentWeatherByCityQuery(city, {
+    skip: !city,
+  });
+
+  const {
+    data: hourlyData,
+    isLoading: isLoadingHourly,
+    error: hourlyError,
+  } = useGetHourlyForecastByCityQuery(city, {
     skip: !city,
   });
 
@@ -67,6 +79,25 @@ export default function CityDetails({ city, onBack }: CityDetailsProps) {
             <span>Pressure: {data.main.pressure} hPa</span>
             <span>Wind: {data.wind.speed} m/s</span>
           </div>
+
+          {hourlyData && hourlyData.list && (
+            <Box mt={6}>
+              {isLoadingHourly ? (
+                <Box textAlign="center" py={8}>
+                  <Spinner size="md" color="purple.500" />
+                  <Text mt={2} fontSize="sm" color="gray.500">
+                    Loading forecast...
+                  </Text>
+                </Box>
+              ) : hourlyError ? (
+                <Text fontSize="sm" color="red.500" textAlign="center" py={4}>
+                  Failed to load hourly forecast
+                </Text>
+              ) : (
+                <TemperatureChart hourlyData={hourlyData.list} />
+              )}
+            </Box>
+          )}
 
           <div className={styles.actions}>
             <button
