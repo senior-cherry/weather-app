@@ -80,7 +80,7 @@ export default function CityDetails({ city, onBack }: CityDetailsProps) {
             <span>Wind: {data.wind.speed} m/s</span>
           </div>
 
-          {hourlyData && hourlyData.list && (
+          {(hourlyData?.list || isLoadingHourly || hourlyError) && (
             <Box mt={6}>
               {isLoadingHourly ? (
                 <Box textAlign="center" py={8}>
@@ -93,9 +93,9 @@ export default function CityDetails({ city, onBack }: CityDetailsProps) {
                 <Text fontSize="sm" color="red.500" textAlign="center" py={4}>
                   Failed to load hourly forecast
                 </Text>
-              ) : (
+              ) : hourlyData?.list ? (
                 <TemperatureChart hourlyData={hourlyData.list} />
-              )}
+              ) : null}
             </Box>
           )}
 
