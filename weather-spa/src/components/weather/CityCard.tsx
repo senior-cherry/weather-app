@@ -16,7 +16,7 @@ export default function CityCard({ city, onRemove, onOpenDetails }: CityCardProp
   };
 
   return (
-    <article className={styles.card}>
+    <div className={styles.card}>
       <div className={styles.cardHeader}>
         <button type="button" onClick={handleOpenDetails} className={styles.cardClickable}>
           <h2 className={styles.cardTitle}>{city}</h2>
@@ -71,6 +71,6 @@ export default function CityCard({ city, onRemove, onOpenDetails }: CityCardProp
           Detailed information
         </button>
       </div>
-    </article>
+    </div>
   );
 }
