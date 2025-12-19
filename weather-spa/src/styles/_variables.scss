@@ -1,0 +1,48 @@
+$font-family:
+  'Manrope',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  sans-serif;
+
+$color-primary: #667eea;
+$color-primary-dark: #764ba2;
+$color-text-primary: #1a202c;
+$color-text-secondary: #4a5568;
+$color-text-muted: #718096;
+$color-danger: #e53e3e;
+$color-danger-light: #fecaca;
+$color-danger-bg: rgba(254, 226, 226, 0.6);
+
+$color-success: #48bb78;
+$color-success-dark: #38a169;
+$color-info: #4299e1;
+$color-info-dark: #3182ce;
+$color-warning: #ed8936;
+$color-warning-dark: #dd6b20;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 0.75rem;
+$spacing-lg: 1rem;
+$spacing-xl: 1.5rem;
+$spacing-2xl: 2rem;
+
+$breakpoint-xs: 400px;
+$breakpoint-sm: 600px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1200px;
+
+$card-min-width: 280px;
+$card-padding: 1.75rem;
+$card-border-radius: 1.5rem;
+$card-gap: $spacing-xl;
+
+$glass-bg: rgba(255, 255, 255, 0.7);
+$glass-bg-hover: rgba(255, 255, 255, 0.85);
+$glass-border: rgba(255, 255, 255, 0.8);
+$glass-blur: blur(20px) saturate(180%);
+
+$transition-fast: 0.2s ease;
+$transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+

@@ -25,17 +25,17 @@ export default function CityDetails({ city, onBack }: CityDetailsProps) {
   });
 
   return (
-    <Box className={styles.page}>
+    <Box className={styles.detailsContainer} display="flex" flexDirection="column" gap="1.5rem">
       <button
         type="button"
-        className={styles.buttonGhost}
+        className={styles.buttonGhostBack}
         onClick={onBack}
         style={{ alignSelf: 'flex-start' }}
       >
         ← Back to cities list
       </button>
 
-      <h1 className={styles.title}>Detailed weather: {city}</h1>
+      <h2 className={styles.title}>Detailed weather: {city}</h2>
 
       {isLoading ? (
         <Box className={styles.loadingState}>
@@ -101,7 +101,7 @@ export default function CityDetails({ city, onBack }: CityDetailsProps) {
 
           <div className={styles.actions}>
             <button
-              className={styles.buttonGhost}
+              className={styles.buttonGhostSuccess}
               type="button"
               onClick={() => refetch()}
               disabled={isFetching}

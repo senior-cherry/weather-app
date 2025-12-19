@@ -1,0 +1,44 @@
+@import './variables';
+
+@mixin glass-effect($bg: $glass-bg, $blur: $glass-blur) {
+  background: $bg;
+  backdrop-filter: $blur;
+  -webkit-backdrop-filter: $blur;
+}
+
+@mixin gradient-text($from: $color-primary, $to: $color-primary-dark) {
+  background: linear-gradient(135deg, $from 0%, $to 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin button-hover($translate: -2px) {
+  &:hover:not(:disabled) {
+    transform: translateY($translate);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@mixin container-width {
+  max-width: $breakpoint-lg;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@mixin responsive-grid($min-width: $card-min-width) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $card-gap;
+}
+

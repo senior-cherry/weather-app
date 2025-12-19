@@ -4,7 +4,8 @@ import { useEffect, useState, useRef } from 'react';
 import styles from '../styles/page.module.scss';
 import CityCard from '@/components/weather/CityCard';
 import CityDetails from '@/components/weather/CityDetails';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Spinner } from '@chakra-ui/react';
+import { Tooltip } from '@/components/ui/tooltip';
 
 const STORAGE_KEY = 'weather_cities';
 
@@ -23,10 +24,19 @@ function loadCitiesFromStorage(): string[] {
 }
 
 export default function Home() {
-  const [cities, setCities] = useState<string[]>(loadCitiesFromStorage);
+  const [cities, setCities] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [newCity, setNewCity] = useState('');
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    const loadedCities = loadCitiesFromStorage();
+    requestAnimationFrame(() => {
+      setCities(loadedCities);
+      setIsLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -74,20 +84,32 @@ export default function Home() {
         <h1 className={styles.title}>Weather App</h1>
       </Box>
 
-      {(cities.length === 0 || cities.length > 0) && (
+      {!selectedCity && (
         <div className={styles.form}>
-          <input
-            className={styles.input}
-            placeholder="Enter city name, example: Kyiv"
-            value={newCity}
-            onChange={(e) => setNewCity(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                handleAddCity();
-              }
+          <Tooltip
+            content="Example: Kyiv"
+            showArrow
+            contentProps={{
+              px: 4,
+              py: 2,
+              fontSize: 'sm',
+              fontWeight: 'medium',
+              borderRadius: 'md',
             }}
-          />
+          >
+            <input
+              className={styles.input}
+              placeholder="Enter city name"
+              value={newCity}
+              onChange={(e) => setNewCity(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAddCity();
+                }
+              }}
+            />
+          </Tooltip>
           <button className={styles.buttonPrimary} type="button" onClick={handleAddCity}>
             Add city
           </button>
@@ -96,6 +118,10 @@ export default function Home() {
 
       {selectedCity ? (
         <CityDetails city={selectedCity} onBack={handleBackToList} />
+      ) : isLoading ? (
+        <Box className={styles.loadingContainer}>
+          <Spinner size="lg" color="purple.500" />
+        </Box>
       ) : cities.length === 0 ? (
         <Text className={styles.empty}>No cities added yet. Add your first city above.</Text>
       ) : (

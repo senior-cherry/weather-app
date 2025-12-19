@@ -60,7 +60,7 @@ export default function CityCard({ city, onRemove, onOpenDetails }: CityCardProp
 
       <div className={styles.actions}>
         <button
-          className={styles.buttonGhost}
+          className={styles.buttonGhostSuccess}
           type="button"
           onClick={() => refetch()}
           disabled={isFetching}
